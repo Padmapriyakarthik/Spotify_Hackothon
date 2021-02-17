@@ -353,7 +353,7 @@ async function getPlaylistWithImage(givenurl)
          for(i=0;i<data.items.length;i++)
         {
             var col_img=document.createElement('div');
-            col_img.setAttribute('class','col-sm-12  col-md-6 col-lg-2 border border-warning rounded m-3');
+            col_img.setAttribute('class','col-sm-12  col-md-6 col-lg-2  m-3');
             var img=document.createElement('img');
             if(data.items[i].images!=null)
             {
@@ -446,7 +446,7 @@ function displaytracks(data,name,num,trackurl)
             var add=document.createElement('button');
             add.setAttribute('class','btn btn-outline-primary m-2');
             add.setAttribute('id',"p"+data.items[i].track.id)
-            add.setAttribute('onclick','AddTrack(this.id,track_url,track_uri)')
+           // add.setAttribute('onclick','AddTrack(this.id,track_url,track_uri)')
             add.innerText="ADD"
             td1.append(add)
             tr.append(td1)
