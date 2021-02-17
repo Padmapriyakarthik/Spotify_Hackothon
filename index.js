@@ -141,8 +141,9 @@ var row=document.getElementById('d');
     // adding a track to user playlist
     async function AddTrack(id,trackurl,turi)
     {
-        https://api.spotify.com/v1/playlists/{playlist_id}/tracks
-        https://api.spotify.com/v1/users/{user_id}/playlists
+       // https://api.spotify.com/v1/playlists/{playlist_id}/tracks
+        //https://api.spotify.com/v1/users/{user_id}/playlists
+        console.log("inside add")
 
         try{
             var  result = await fetch('https://api.spotify.com/v1/users/'+current_user+'/playlists', {
@@ -437,7 +438,7 @@ function displaytracks(data,name,num,trackurl)
             tr.append(td)
         }
         if(num==2)
-        {
+        {   track_uri=data.items[i].track.uri;
             var td1=document.createElement('td');
             var add=document.createElement('button');
             add.setAttribute('class','btn btn-outline-primary m-2');
