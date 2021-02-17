@@ -441,7 +441,7 @@ function displaytracks(data,name,num,trackurl)
             var td1=document.createElement('td');
             var add=document.createElement('button');
             add.setAttribute('class','btn btn-outline-primary m-2');
-            add.setAttribute('id',data.items[i].track.id)
+            add.setAttribute('id',"p"+data.items[i].track.id)
             add.setAttribute('onclick','AddTrack(this.id,track_url,track_uri)')
             add.innerText="ADD"
             td1.append(add)
