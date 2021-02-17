@@ -157,7 +157,7 @@ var row=document.getElementById('d');
                   })
             });
             var  data = await result.json();
-           console.log(json)
+           console.log(data)
         }
         catch(err)
         {
@@ -357,7 +357,7 @@ async function getPlaylistWithImage(givenurl)
             var col_img=document.createElement('div');
             col_img.setAttribute('class','col-sm-12  col-md-6 col-lg-2 border border-warning rounded m-3');
             var img=document.createElement('img');
-            if(data.items[i].images[0].img!=" ")
+            if(data.items[i].images[0].url!=" ")
             {
                 
             img.setAttribute('src',data.items[i].images[0].url)
