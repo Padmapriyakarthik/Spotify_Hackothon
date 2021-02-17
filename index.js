@@ -11,7 +11,7 @@ var user_track=1;
 var search_track=2;
 var track_url;
 var current_user_url;
-var current_user='bsriav9zavvt7m8lerd1rvajo';
+var current_user;
 var Tdisplay=Tdisplay=document.getElementById('tracks');;
 var row=document.getElementById('d');
 
@@ -201,6 +201,7 @@ document.getElementById('playlist').addEventListener('click',()=>{
     
     getallplaylist().then((result)=>{
         console.log(result.id)
+        current_user=result.id;
         current_user_url='https://api.spotify.com/v1/users/'+result.id+'/playlists?offset=0&limit=5';
         getPlaylistWithImage(current_user_url);
     })
