@@ -281,20 +281,16 @@ async function searchPlaylistWithImage(givenurl)
         {
             var col_img=document.createElement('div');
             col_img.setAttribute('class','col-sm-12  col-md-6 col-lg-2 border border-warning rounded m-3');
-            if(data.playlists.item[i].images!=null)
-            {
-                var img=document.createElement('img');
+            var img=document.createElement('img');
             
-                if(data.playlists.items[i].images[0].img!=" ")
-                {
-                    
-                img.setAttribute('src',data.playlists.items[i].images[0].url)
-                }
-                img.setAttribute('height',300);
-                img.setAttribute('width',300);
-                img.setAttribute('class','img-thumbnail');
+            if(data.playlists.items[i].images[0].img!=" ")
+            {
+                
+            img.setAttribute('src',data.playlists.items[i].images[0].url)
             }
-           
+            img.setAttribute('height',300);
+            img.setAttribute('width',300);
+            img.setAttribute('class','img-thumbnail');
     
 
             tracks.push(data.playlists.items[i].tracks.href);
@@ -362,14 +358,19 @@ async function getPlaylistWithImage(givenurl)
             var col_img=document.createElement('div');
             col_img.setAttribute('class','col-sm-12  col-md-6 col-lg-2 border border-warning rounded m-3');
             var img=document.createElement('img');
-            if(data.items[i].images[0].url!=" ")
+            if(data.items[i].images!=null)
             {
                 
-            img.setAttribute('src',data.items[i].images[0].url)
+                if(data.items[i].images[0].url!=" ")
+                {
+                    
+                img.setAttribute('src',data.items[i].images[0].url)
+                }
+                img.setAttribute('height',300);
+                img.setAttribute('width',300);
+                img.setAttribute('class','img-thumbnail');
             }
-            img.setAttribute('height',300);
-            img.setAttribute('width',300);
-            img.setAttribute('class','img-thumbnail');
+           
     
 
             tracks.push(data.items[i].tracks.href);
