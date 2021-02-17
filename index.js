@@ -17,182 +17,206 @@ var row=document.getElementById('d');
 
 
 // getting accesstoken
-var token_url=window.location.href;
-token_url=token_url.split("#");
-if(token_url[1]==undefined)
-{
-    window.location.replace('spotify.html')
-}
-
-var search_token_url="?"+token_url[1];
-console.log(search_token_url);
-const urlParams = new URLSearchParams(search_token_url);
-const myParam = urlParams.get('access_token');
-if(myParam==null)
-{
-    window.location.replace('spotify.html')
-}
-var token=myParam;
-console.log(myParam)
-
-
-async function getallplaylist(){
-
-    try{
-        var  result = await fetch('https://api.spotify.com/v1/me', {
-            method: 'GET',
-            headers: { 'Authorization' : 'Bearer ' + token}
-        });
-        var  data = await result.json();
-        //console.log(data)
-       return data;
-    }
-    catch(err)
+    var token_url=window.location.href;
+    token_url=token_url.split("#");
+    if(token_url[1]==undefined)
     {
-        console.log(err);
+        window.location.replace('spotify.html')
     }
-}
 
-async function search(givenurl){
-  
-    try{
-        var  result = await fetch(givenurl, {
-            method: 'GET',
-            headers: { 'Authorization' : 'Bearer ' + token}
-        });
-        var  data = await result.json();
-        //console.log(data)
-        return data;
-    }
-    catch(err)
+    var search_token_url="?"+token_url[1];
+    console.log(search_token_url);
+    const urlParams = new URLSearchParams(search_token_url);
+    const myParam = urlParams.get('access_token');
+    if(myParam==null)
     {
-        console.log(err);
+        window.location.replace('spotify.html')
     }
-}
-// getting playlist values        
-async function  getUserPlaylist  (url, token) {
-    
-    try{
-        var  result = await fetch(url, {
-            method: 'GET',
-            headers: { 'Authorization' : 'Bearer ' + token}
-            
-        });
-        var  data = await result.json();
-       // console.log(data)
-        return data;
-    }
-    catch(err)
-    {
-        console.log(err);
-    }
-   
-}
+    var token=myParam;
+    console.log(myParam)
 
+// getting userid
+    async function getallplaylist(){
 
-async function  getTracks (id,num) {
-    
-    var j=id.slice(1);
-    console.log(num)
-    var name=document.getElementById(id).innerText;
-    var track_url=tracks[j];
-    //console.log(name);
-    try{
-        var  result = await fetch(track_url, {
-            method: 'GET',
-            headers: { 'Authorization' : 'Bearer ' + token}
-            
-        });
-        var  data = await result.json();
-        displaytracks(data,name,num,track_url)
-    }
-    catch(err)
-    {
-        console.log(err);
-    }
-   
-}
-
-
-async function Removetrack(id,trackurl,turi)
-{
-console.log(id,trackurl,turi)
-//var url=track_url+"?uri="+uri
-try{
-    var  result = await fetch(trackurl, {
-        method: 'DELETE',
-        headers: {"Content-Type" :"json",
-            'Authorization' : 'Bearer ' + token},
-        body:JSON.stringify({
-            "tracks": [
-              {
-                "uri": turi,
-              },
-            ]
-          })
-        
-    });
-    var  data = await result.json();
-    console.log(data)
-    document.getElementById(id).parentElement.remove()
-}
-catch(err)
-{
-    console.log(err);
-}
-}
-
-async function followPlaylist(id)
-{
-    var val=document.getElementById(id).innerText;
-    var list;
-    console.log(id,playlistid,val);
-    if(val=="follow")
-    {
-         list=playlistid[id];
-         
-        var f_url='https://api.spotify.com/v1/playlists/'+list+'/followers'
         try{
-            var  result = await fetch(f_url, {
-                method: 'PUT',
-                headers: { 'Authorization' : 'Bearer ' + token},
-                body:"public=false"
+            var  result = await fetch('https://api.spotify.com/v1/me', {
+                method: 'GET',
+                headers: { 'Authorization' : 'Bearer ' + token}
             });
             var  data = await result.json();
-           //console.log(data)
-            return data;
+        return data;
         }
         catch(err)
         {
-            //console.log(err);
+            console.log(err);
         }
-        //document.getElementById(id).innerText="unfollow";
     }
-    else{
-        list=getplaylistid[id];
-        console.log(getplaylistid)
-        var f_url='https://api.spotify.com/v1/playlists/'+list+'/followers'
+
+//searching for playlist
+        async function search(givenurl){
+        
+            try{
+                var  result = await fetch(givenurl, {
+                    method: 'GET',
+                    headers: { 'Authorization' : 'Bearer ' + token}
+                });
+                var  data = await result.json();
+                return data;
+            }
+            catch(err)
+            {
+                console.log(err);
+            }
+        }
+// getting playlist values        
+    async function  getUserPlaylist  (url, token) {
+        
         try{
-            var  result = await fetch(f_url, {
-                method: 'DELETE',
+            var  result = await fetch(url, {
+                method: 'GET',
                 headers: { 'Authorization' : 'Bearer ' + token}
                 
             });
             var  data = await result.json();
-           console.log(data)
             return data;
         }
         catch(err)
         {
-            //console.log(err);
+            console.log(err);
         }
-        (document.getElementById(id).parentElement.remove())
-        //document.getElementById(id).innerText="follow";
+    
     }
 
-}
+// getting tracklist of playlist
+    async function  getTracks (id,num) {
+        
+        var j=id.slice(1);
+        console.log(num)
+        var name=document.getElementById(id).innerText;
+        var track_url=tracks[j];
+        try{
+            var  result = await fetch(track_url, {
+                method: 'GET',
+                headers: { 'Authorization' : 'Bearer ' + token}
+                
+            });
+            var  data = await result.json();
+            displaytracks(data,name,num,track_url)
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
+    
+    }
 
-// entirelist..
+// removing a track from a users playlist
+    async function Removetrack(id,trackurl,turi)
+        {
+        console.log(id,trackurl,turi)
+
+        try{
+            var  result = await fetch(trackurl, {
+                method: 'DELETE',
+                headers: {"Content-Type" :"json",
+                    'Authorization' : 'Bearer ' + token},
+                body:JSON.stringify({
+                    "tracks": [
+                    {
+                        "uri": turi,
+                    },
+                    ]
+                })
+                
+            });
+            var  data = await result.json();
+            document.getElementById(id).parentElement.remove()
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
+    }
+
+    // adding a track to user playlist
+    async function AddTrack(id,trackurl,turi)
+    {
+        https://api.spotify.com/v1/playlists/{playlist_id}/tracks
+        https://api.spotify.com/v1/users/{user_id}/playlists
+
+        try{
+            var  result = await fetch('https://api.spotify.com/v1/users/'+current_user+'/playlists', {
+                method: 'POST',
+                headers: {"Content-Type" :"json",
+                    'Authorization' : 'Bearer ' + token},
+                body:JSON.stringify({
+                    "name": "New Playlist",
+                    "description": "New playlist description",
+                    "public": false
+                  })
+            });
+            var  data = await result.json();
+           console.log(json)
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
+    }
+
+//follow and unfollow a playlist 
+        async function followPlaylist(id)
+        {
+            var val=document.getElementById(id).innerText;
+            var list;
+            console.log(id,playlistid,val);
+            if(val=="follow")
+            {
+                list=playlistid[id];
+                
+                var f_url='https://api.spotify.com/v1/playlists/'+list+'/followers'
+                try{
+                    var  result = await fetch(f_url, {
+                        method: 'PUT',
+                        headers: { 'Authorization' : 'Bearer ' + token},
+                        body:"public=false"
+                    });
+                    var  data = await result.json();
+                //console.log(data)
+                    return data;
+                }
+                catch(err)
+                {
+                    //console.log(err);
+                }
+                
+            }
+            else{
+                list=getplaylistid[id];
+                console.log(getplaylistid)
+                var f_url='https://api.spotify.com/v1/playlists/'+list+'/followers'
+                try{
+                    var  result = await fetch(f_url, {
+                        method: 'DELETE',
+                        headers: { 'Authorization' : 'Bearer ' + token}
+                        
+                    });
+                    var  data = await result.json();
+                console.log(data)
+                    return data;
+                }
+                catch(err)
+                {
+                    //console.log(err);
+                }
+                (document.getElementById(id).parentElement.remove())
+            
+            }
+
+        }
+
+
+
 document.getElementById('playlist').addEventListener('click',()=>{
 
     document.getElementById('snext').style.display="none"
@@ -205,10 +229,7 @@ document.getElementById('playlist').addEventListener('click',()=>{
         current_user_url='https://api.spotify.com/v1/users/'+result.id+'/playlists?offset=0&limit=5';
         getPlaylistWithImage(current_user_url);
     })
-    //console.log(current_user_url)
-    
-   // getallplaylist()
-    //search()
+
 });
  
 document.getElementById("next").addEventListener('click',async()=>{
@@ -260,7 +281,6 @@ async function searchPlaylistWithImage(givenurl)
             var col_img=document.createElement('div');
             col_img.setAttribute('class','col-sm-12  col-md-6 col-lg-2 border border-warning rounded m-3');
             var img=document.createElement('img');
-           // console.log(data.items[i].images[0].height)
             if(data.playlists.items[i].images[0].img!=" ")
             {
                 
@@ -295,7 +315,6 @@ async function searchPlaylistWithImage(givenurl)
             if(data.playlists.next!=null)
             {
                 nexturl=data.playlists.next;
-              // console.log(data);
                 document.getElementById('snext').style.display="block";
             }
             else
@@ -337,7 +356,6 @@ async function getPlaylistWithImage(givenurl)
             var col_img=document.createElement('div');
             col_img.setAttribute('class','col-sm-12  col-md-6 col-lg-2 border border-warning rounded m-3');
             var img=document.createElement('img');
-           // console.log(data.items[i].images[0].height)
             if(data.items[i].images[0].img!=" ")
             {
                 
@@ -363,12 +381,10 @@ async function getPlaylistWithImage(givenurl)
             follow.innerText="unfollow";
             col_img.append(img,p,follow)
             row.append(col_img)
-
         
             if(data.next!=null)
             {
                 nexturl=data.next;
-              // console.log(data);
                 document.getElementById('next').style.display="block";
             }
             else
@@ -426,74 +442,13 @@ function displaytracks(data,name,num,trackurl)
             var add=document.createElement('button');
             add.setAttribute('class','btn btn-outline-primary m-2');
             add.setAttribute('id',data.items[i].track.id)
+            add.setAttribute('onclick','AddTrack(this.id,track_url,track_uri)')
             add.innerText="ADD"
             td1.append(add)
             tr.append(td1)
-        }
-        /*console.log(data.items[i].track.name);
-        console.log(data.items[i].track.id);
-        console.log(data.items[i].track.album.artists[0].name);*/
-        
+        }        
         table_body.append(tr)
     }
     Tdisplay.style.display="block"
 }
-
-
-   
-   /* const _getPlaylistByGenre = async (token, genreId) => {
-
-        const limit = 10;
-        
-        const result = await fetch(`https://api.spotify.com/v1/browse/categories/${genreId}/playlists?limit=${limit}`, {
-            method: 'GET',
-            headers: { 'Authorization' : 'Bearer ' + token}
-        });
-
-        const data = await result.json();
-        return data.playlists.items;
-    }
-
-    const _getTracks = async (token, tracksEndPoint) => {
-
-        const limit = 10;
-
-        const result = await fetch(`${tracksEndPoint}?limit=${limit}`, {
-            method: 'GET',
-            headers: { 'Authorization' : 'Bearer ' + token}
-        });
-
-        const data = await result.json();
-        return data.items;
-    }
-
-    const _getTrack = async (token, trackEndPoint) => {
-
-        const result = await fetch(`${trackEndPoint}`, {
-            method: 'GET',
-            headers: { 'Authorization' : 'Bearer ' + token}
-        });
-
-        const data = await result.json();
-        return data;
-    }
-
-    return {
-        getToken() {
-            console.log(_getToken())
-        },
-        getGenres(token) {
-            return _getGenres(token);
-        },
-        getPlaylistByGenre(token, genreId) {
-            return _getPlaylistByGenre(token, genreId);
-        },
-        getTracks(token, tracksEndPoint) {
-            return _getTracks(token, tracksEndPoint);
-        },
-        getTrack(token, trackEndPoint) {
-            return _getTrack(token, trackEndPoint);
-        }
-    }
-})();*/
 
