@@ -338,9 +338,6 @@ async function searchPlaylistWithImage(givenurl)
 
 }
 
-
-
-
 async function getPlaylistWithImage(givenurl)
  {
     tracks=[];
