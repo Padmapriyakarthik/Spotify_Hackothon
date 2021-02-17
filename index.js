@@ -281,7 +281,7 @@ async function searchPlaylistWithImage(givenurl)
         {
             var col_img=document.createElement('div');
             col_img.setAttribute('class','col-sm-12  col-md-6 col-lg-2 border border-warning rounded m-3');
-            if(data.playlists.item[i].images==null)
+            if(data.playlists.item[i].images!=null)
             {
                 var img=document.createElement('img');
             
